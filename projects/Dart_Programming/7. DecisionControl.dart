@@ -35,18 +35,18 @@
 
 // Nested If-else
 
-// void main(){
-//   int x = 10, y = 20, z = 30;
-
-//   if(x > y && x > z){
-//     print("$x is Largest");
-//   }
-//   else if(y > z){
-//     print("$y is largest");
-//   }
-//       else{
-//     print("$z is largest");
-//           }
+// int age = 20;
+// bool hasID = true;
+// if(age >= 18){
+//     if(hasID){
+//         print("Entry Allowed");
+//     }
+//     else{
+//         print("ID Required");
+//     }
+// }
+// else{
+//     print("Under Age");
 // }
 
 // Switch

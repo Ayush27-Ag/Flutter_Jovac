@@ -33,7 +33,17 @@ void main() {
       .readLineSync()! // 10 20 30 40 50 "one String"
       .split(' ') // 10 20 30 40 50
       .map((i) => int.parse(i)) // 10 20 30 40 50 all integers
+      /*map do not return string they return iterable<int>
+       thats's why we need to convert this into list after map*/
       .toList(); // List
 
   print(numbers);
 }
+
+
+// Difference between int.parse() and int.tryParse()?
+
+// 1. int.parse("123") → 123
+// 2. int.parse("abc") → ❌ FormatException (Runtime Error)
+// 3. int.tryParse("123") → 123
+// 4. int.tryParse("abc") → null (No crash)

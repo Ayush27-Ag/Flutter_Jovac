@@ -45,7 +45,6 @@ void main() {
   print(names1.runtimeType);
 
   dynamic names2 = [10, 20, 30, "Pankaj", "Rahul", 2.5000, true, false];
-
   print(names2);
   print(names2.runtimeType);
 }

@@ -3,14 +3,18 @@
 // 2. while loop: When we check the condition before Execution
 // 3. do while loop: When u need to execute your loop atleast before the condition
 // 4. for-in() loop: When data is already given
-// 5. forEach(): Similar but a different way to work with Data
-// 1.
+// forEach(): Used to iterate over every element of a collection (List, Map, Set)
+// It executes a callback function once for each element.
+
+// 1. for loop
+
 // void main(){
 //   for (int i=1;i<=10;i++)
 //     print(i);
 // }
 
-//2. While
+// 2. While loop
+
 // void main(){
 //   int i=1;
 //   while(i<=10)
@@ -25,6 +29,8 @@
 //   }
 // }
 
+// 3. do-while loop
+
 // void main(){
 //   int i =1;
 //   do {
@@ -34,6 +40,7 @@
 // }
 
 // 4. for in Loop
+
 // void main(){
 //   var numbers = [10,20,30,40];
 //   int sum = 0;
@@ -43,7 +50,8 @@
 //   print(sum);
 // }
 
-// foreach loop
+// 5. foreach loop
+
 // void main(){
 //   var numbers = [10,20,30,40];
 //   int sum = 0;
@@ -52,10 +60,16 @@
 //   print(sum);
 // }
 
+// void main() {
+//   Map<String, int> marks = {"Math": 90, "English": 70, "Computer": 95};
+
+//   for (var entry in marks.entries) {
+//     print("${entry.key} : ${entry.value}");
+//   };
+// }
+
 void main() {
   Map<String, int> marks = {"Math": 90, "English": 70, "Computer": 95};
 
-  marks.forEach((subject, score) {
-    print("$subject: $score");
-  });
+  marks.forEach((subject, score) => print("$subject: $score"));
 }

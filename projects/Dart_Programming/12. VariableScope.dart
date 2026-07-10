@@ -15,3 +15,5 @@ companyName() {
   var name = "Beta-Labs";
   print("My Company Name: $name");
 }
+
+// Compiler hamesha nearest scope me variable dhoondta hai.

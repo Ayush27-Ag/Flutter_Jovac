@@ -5,7 +5,7 @@ void main() {
   print(name);
   // Type checking is enabled at compile time
   var myName = "Rahul"; // Variable Declaration
-  myName = 2.5 as String; // Variable Assignment
+  // myName = 2.5 as String; Variable Assignment
   print(myName);
 
   print(myName.runtimeType);
@@ -20,8 +20,8 @@ void main() {
   print(pi);
 
   // final define data only runtime
-  var myName1;
+  final myName1;
   myName1 = "Pankaj Kapoor";
-  myName1 = "Rahul";
+  // myName1 = "Rahul";
   print(myName1);
 }
