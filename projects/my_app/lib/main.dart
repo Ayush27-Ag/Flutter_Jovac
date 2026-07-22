@@ -1,5 +1,3 @@
-// TASK-9 : Stack Widgets
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,90 +11,84 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const ProfileAvatarScreen(),
+      home: FoodListScreen(),
     );
   }
 }
 
-class ProfileAvatarScreen extends StatelessWidget {
-  const ProfileAvatarScreen({super.key});
+class FoodListScreen extends StatelessWidget {
+  FoodListScreen({super.key});
+
+  final List<Map<String, String>> foodList = [
+    {
+      "name": "French Fries",
+      "price": "₹99",
+      "image": "assets/images/frenchfries.jpg",
+    },
+    {
+      "name": "Chocolate Cake",
+      "price": "₹179",
+      "image": "assets/images/chocolate cake.jpeg",
+    },
+    {"name": "Pasta", "price": "₹159", "image": "assets/images/pasta.jpeg"},
+    {"name": "Burger", "price": "₹149", "image": "assets/images/burger.jpg"},
+    {
+      "name": "Cold Coffee",
+      "price": "₹89",
+      "image": "assets/images/cold coffee.jpeg",
+    },
+    {"name": "Pizza", "price": "₹249", "image": "assets/images/pizza.jpeg"},
+    {
+      "name": "Ice Cream",
+      "price": "₹69",
+      "image": "assets/images/icecream.jpeg",
+    },
+    {
+      "name": "Sandwich",
+      "price": "₹119",
+      "image": "assets/images/sandwich.jpg",
+    },
+    {
+      "name": "Cold Drink",
+      "price": "₹49",
+      "image": "assets/images/colddrink.jpg",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Task-8B: Profile Avatars"),
-        backgroundColor: Colors.blue,
+        title: const Text("ListView Example"),
+        backgroundColor: Colors.green,
         foregroundColor: Colors.white,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // -------- Profile with camera icon --------
-            const Text(
-              "Profile with Camera Icon",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                const CircleAvatar(
-                  radius: 90,
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: foodList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 3,
+            margin: const EdgeInsets.symmetric(vertical: 6),
+            child: ListTile(
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  foodList[index]["image"]!,
+                  width: 55,
+                  height: 55,
+                  fit: BoxFit.cover,
                 ),
-                Positioned(
-                  right: -5,
-                  bottom: -5,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const CircleAvatar(
-                      radius: 24,
-                      backgroundColor: Colors.blue,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              title: Text(
+                foodList[index]["name"]!,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(foodList[index]["price"]!),
+              trailing: const Icon(Icons.shopping_cart, color: Colors.green),
             ),
-
-            // -------- Profile with online indicator --------
-            const Text(
-              "Profile with Online Indicator",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                const CircleAvatar(
-                  radius: 90,
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
-                ),
-                Positioned(
-                  top: 5,
-                  right: 5,
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
