@@ -1,44 +1,17 @@
 import 'package:flutter/material.dart';
+import "package:my_app/screens/container_widget.dart";
+import "package:my_app/screens/stateful_widget.dart";
+import "package:my_app/screens/stateless_widget.dart";
 
 void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Flutter App",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.blue,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 70,
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.person, size: 90, color: Colors.white),
-              ),
-              Text(
-                "Pankaj Kapoor",
-                textDirection: TextDirection.ltr,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Flutter Devloper",
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 7, 7, 7),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen1());
+  }
 }
