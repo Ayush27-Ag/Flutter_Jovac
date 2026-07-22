@@ -48,7 +48,7 @@
 //   }
 // }
 
-// TASK-6 : Create Your First Flutter App–Student ID Card
+// TASK-7 : Stateless & Stateful Widgets
 
 import 'package:flutter/material.dart';
 
@@ -56,63 +56,77 @@ void main() {
   runApp(const MyApp());
 }
 
+// Root Widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Student ID Card"),
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-        ),
-        body: Center(
-          child: Container(
-            width: 300,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.blue, width: 2),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 8,
-                  offset: Offset(2, 4),
-                ),
-              ],
+      home: const HomeScreen(),
+    );
+  }
+}
+
+// Home Screen
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isFollowing = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(isFollowing ? "Following Profile" : "Flutter Profile"),
+        backgroundColor: isFollowing ? Colors.green : Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.account_circle, size: 140, color: Colors.blue),
+            const SizedBox(height: 20),
+            const Text(
+              "Ayush Agarwal",
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.account_circle, size: 120, color: Colors.blue),
-
-                SizedBox(height: 15),
-
-                Text(
-                  "Ayush Agarwal",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-
-                SizedBox(height: 10),
-
-                Text(
-                  "B.Tech CSE",
-                  style: TextStyle(fontSize: 22, color: Colors.blue),
-                ),
-
-                SizedBox(height: 20),
-
-                Text(
-                  "Roll No: 101",
-                  style: TextStyle(fontSize: 20, color: Colors.black54),
-                ),
-              ],
+            const SizedBox(height: 10),
+            const Text(
+              "Flutter Developer",
+              style: TextStyle(fontSize: 22, color: Colors.blue),
             ),
-          ),
+            const SizedBox(height: 10),
+            const Text(
+              "ayush@gmail.com",
+              style: TextStyle(fontSize: 20, color: Colors.black54),
+            ),
+            const SizedBox(height: 35),
+
+            ElevatedButton.icon(
+              onPressed: () {
+                setState(() {
+                  isFollowing = !isFollowing;
+                });
+              },
+
+              icon: Icon(isFollowing ? Icons.check : Icons.person_outline),
+              label: Text(isFollowing ? "Following" : "Follow"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isFollowing ? Colors.green : Colors.blue,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 35,
+                  vertical: 15,
+                ),
+                textStyle: const TextStyle(fontSize: 22),
+              ),
+            ),
+          ],
         ),
       ),
     );
