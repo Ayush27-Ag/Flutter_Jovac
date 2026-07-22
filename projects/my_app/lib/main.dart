@@ -1,54 +1,4 @@
-// import 'package:flutter/material.dart';
-// import "package:my_app/screens/align_widget.dart";
-// import "package:my_app/screens/asset_image.dart";
-// import "package:my_app/screens/card_widget.dart";
-// import "package:my_app/screens/container_widget.dart";
-// import "package:my_app/screens/expanded_widget.dart";
-// import "package:my_app/screens/flexible_widget.dart";
-// import "package:my_app/screens/inkwell_widget.dart";
-// import "package:my_app/screens/listtileview.dart";
-// import "package:my_app/screens/listview_widget.dart";
-// import "package:my_app/screens/row_column_widgets.dart";
-// import "package:my_app/screens/safearea_widget.dart";
-// import "package:my_app/screens/spacer.dart";
-// import "package:my_app/screens/stack_widget.dart";
-// import "package:my_app/screens/stateful_widget.dart";
-// import "package:my_app/screens/stateless_widget.dart";
-// import "package:my_app/screens/wrap_widget.dart";
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       // home: ContainerWidget(),
-//       // home: HomeScreen1(),
-//       // home: HomeScreen(),
-//       // home: SafeAreaWidget(),
-//       // home: RowColumnWidgets(),
-//       // home: StackWidget(),
-//       // home: SpacerWidget(),
-//       // home: AlignWidget(),
-//       // home: WrapWidget(),
-//       // home: WrapWidget(),
-//       // home: ExpandedWidget(),
-//       // home: FlexibleWidget(),
-//       // home: ListViewWidget(),
-//       // home: ListTileWidget(),
-//       // home: CardWidget(),
-//       // home: InkWellWidget(),
-//       home: ImageWidget(),
-//     );
-//   }
-// }
-
-// TASK-7 : Stateless & Stateful Widgets
+// TASK-8 : Flutter Layout
 
 import 'package:flutter/material.dart';
 
@@ -56,77 +6,113 @@ void main() {
   runApp(const MyApp());
 }
 
-// Root Widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const BurgerCard(),
     );
   }
 }
 
-// Home Screen
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+class BurgerCard extends StatelessWidget {
+  const BurgerCard({super.key});
 
-class _HomeScreenState extends State<HomeScreen> {
-  bool isFollowing = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(isFollowing ? "Following Profile" : "Flutter Profile"),
-        backgroundColor: isFollowing ? Colors.green : Colors.blue,
+        title: const Text("Cheese Burger"),
+        backgroundColor: Colors.deepOrange,
         foregroundColor: Colors.white,
       ),
+
+      backgroundColor: const Color(0xfff8f3f7),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.account_circle, size: 140, color: Colors.blue),
-            const SizedBox(height: 20),
-            const Text(
-              "Ayush Agarwal",
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Flutter Developer",
-              style: TextStyle(fontSize: 22, color: Colors.blue),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "ayush@gmail.com",
-              style: TextStyle(fontSize: 20, color: Colors.black54),
-            ),
-            const SizedBox(height: 35),
-
-            ElevatedButton.icon(
-              onPressed: () {
-                setState(() {
-                  isFollowing = !isFollowing;
-                });
-              },
-
-              icon: Icon(isFollowing ? Icons.check : Icons.person_outline),
-              label: Text(isFollowing ? "Following" : "Follow"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isFollowing ? Colors.green : Colors.blue,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 35,
-                  vertical: 15,
-                ),
-                textStyle: const TextStyle(fontSize: 22),
+        child: Container(
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(2, 4),
               ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(18),
+
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    "assets/images/burger.jpg",
+                    height: 180,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Cheese Burger",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Fresh & Delicious Burger\nwith Cheese",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+                const SizedBox(height: 18),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.amber),
+                    SizedBox(width: 5),
+                    Text("4.8 (250 Reviews)", style: TextStyle(fontSize: 18)),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "₹249",
+                  style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrange,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      "Order Now",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
