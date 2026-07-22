@@ -1,4 +1,4 @@
-// TASK-8 : Flutter Layout
+// TASK-9 : Stack Widgets
 
 import 'package:flutter/material.dart';
 
@@ -13,106 +13,89 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const BurgerCard(),
+      home: const ProfileAvatarScreen(),
     );
   }
 }
 
-class BurgerCard extends StatelessWidget {
-  const BurgerCard({super.key});
+class ProfileAvatarScreen extends StatelessWidget {
+  const ProfileAvatarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Cheese Burger"),
-        backgroundColor: Colors.deepOrange,
+        title: const Text("Task-8B: Profile Avatars"),
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
-
-      backgroundColor: const Color(0xfff8f3f7),
       body: Center(
-        child: Container(
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(2, 4),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(18),
-
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // -------- Profile with camera icon --------
+            const Text(
+              "Profile with Camera Icon",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    "assets/images/burger.jpg",
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                const CircleAvatar(
+                  radius: 90,
+                  backgroundImage: AssetImage("assets/images/profile.jpg"),
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Cheese Burger",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Fresh & Delicious Burger\nwith Cheese",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
-                ),
-                const SizedBox(height: 18),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.star, color: Colors.amber),
-                    SizedBox(width: 5),
-                    Text("4.8 (250 Reviews)", style: TextStyle(fontSize: 18)),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "₹249",
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepOrange,
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepOrange,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                Positioned(
+                  right: -5,
+                  bottom: -5,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
                     ),
-                    child: const Text(
-                      "Order Now",
-                      style: TextStyle(fontSize: 20),
+                    child: const CircleAvatar(
+                      radius: 24,
+                      backgroundColor: Colors.blue,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 28,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
+
+            // -------- Profile with online indicator --------
+            const Text(
+              "Profile with Online Indicator",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                const CircleAvatar(
+                  radius: 90,
+                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                ),
+                Positioned(
+                  top: 5,
+                  right: 5,
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 3),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
