@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import "package:my_app/screens/Buttons/stateful_buttons.dart";
 import "package:my_app/screens/Buttons/stateless_buttons.dart";
+import "package:my_app/screens/Navigation/home_screen.dart";
+import "package:my_app/screens/Navigation/push_navigation.dart";
+import "package:my_app/screens/Navigation/screen1.dart";
+import "package:my_app/screens/Navigation/screen2.dart";
+import "package:my_app/screens/Navigation/screen3.dart";
 import "package:my_app/screens/align_widget.dart";
 import "package:my_app/screens/asset_image.dart";
 import "package:my_app/screens/card_widget.dart";
@@ -46,8 +51,16 @@ class MyApp extends StatelessWidget {
       // home: CardWidget(),
       // home: InkWellWidget(),
       // home: ImageWidget(),
-      home: StatelessButtonsWidget(),
+      // home: StatelessButtonsWidget(),
       // home:SwitchButton()
+      // home:StatefulButtons()
+      // home:HomeScreen(),
+      home: PushNvaigation1(),
+      routes: {
+        'S1': (context) => Screen1(),
+        'S2': (context) => Screen2(),
+        'S3': (context) => Screen3(),
+      },
     );
   }
 }
