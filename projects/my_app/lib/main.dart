@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:my_app/screens/BottomSheet/model_bottomsheet.dart";
 import "package:my_app/screens/Form/calculator.dart";
 import "package:my_app/screens/Form/formfield.dart";
 import "package:my_app/screens/Form/textfield_widget.dart";
@@ -29,6 +30,9 @@ import "package:my_app/screens/stateful_widget.dart";
 import "package:my_app/screens/stateless_widget.dart";
 import "package:my_app/screens/wrap_widget.dart";
 import "package:my_app/screens/Navigation/tabbar_navigation.dart";
+import "package:my_app/screens/UI%20Widgets/SnackbarWidget/notifications_widgets.dart";
+import "package:my_app/screens/UI%20Widgets/DialogBox/alert_dialog.dart";
+import "package:my_app/screens/UI%20Widgets/Tables/table_widget.dart";
 
 void main() {
   runApp(MyApp());
@@ -67,9 +71,13 @@ class MyApp extends StatelessWidget {
       // home: BottomNavigationWidget(),
       // home: TabbarNavigationWidget(),
       // home: PassingDataScreen1(),
-      home: TextFieldWidget(),
+      // home: TextFieldWidget(),
       // home: Calculator(),
       // home: TextFormFieldWidget(),
+      // home: AlertDialogWidget(),
+      // home: NotificationsWidgets(),
+      // home: BottomSheetWidget(),
+      home: TableWidget(),
       routes: {
         'S1': (context) => Screen1(),
         'S2': (context) => Screen2(),
