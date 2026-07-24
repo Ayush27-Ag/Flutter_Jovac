@@ -17,10 +17,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
   void updateState() {
     setState(() {
       appBarTitle = "My Profile";
+      buttonColor = Colors.green;
+      buttonText = "Followed";
     });
     print(appBarTitle);
-    buttonColor = Colors.green;
-    buttonText = "Followed";
   }
 
   @override
