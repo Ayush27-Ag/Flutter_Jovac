@@ -36,9 +36,10 @@ class _PassingDataScreen1State extends State<PassingDataScreen1> {
               },
               child: Text("Goto Screen-2"),
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(message, style: TextStyle(fontSize: 16)),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
             ),
           ],
         ),

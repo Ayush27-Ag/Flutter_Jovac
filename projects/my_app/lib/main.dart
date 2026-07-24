@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import "package:my_app/screens/Form/calculator.dart";
+import "package:my_app/screens/Form/formfield.dart";
+import "package:my_app/screens/Form/textfield_widget.dart";
 import "package:my_app/screens/Buttons/stateful_buttons.dart";
 import "package:my_app/screens/Buttons/stateless_buttons.dart";
 import "package:my_app/screens/Navigation/home_screen.dart";
@@ -60,10 +63,13 @@ class MyApp extends StatelessWidget {
       // home:StatefulButtons()
       // home:HomeScreen(),
       // home: PushNvaigation1(),
-      home: DrawerNavigationWidget(),
+      // home: DrawerNavigationWidget(),
       // home: BottomNavigationWidget(),
       // home: TabbarNavigationWidget(),
       // home: PassingDataScreen1(),
+      home: TextFieldWidget(),
+      // home: Calculator(),
+      // home: TextFormFieldWidget(),
       routes: {
         'S1': (context) => Screen1(),
         'S2': (context) => Screen2(),
