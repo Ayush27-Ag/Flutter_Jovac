@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import "package:my_app/screens/Buttons/stateful_buttons.dart";
 import "package:my_app/screens/Buttons/stateless_buttons.dart";
 import "package:my_app/screens/Navigation/home_screen.dart";
+import "package:my_app/screens/Navigation/bottom_navigation.dart";
+import "package:my_app/screens/Navigation/drawer_navigation.dart";
+import "package:my_app/screens/Navigation/pass_data_screen1.dart";
 import "package:my_app/screens/Navigation/push_navigation.dart";
 import "package:my_app/screens/Navigation/screen1.dart";
 import "package:my_app/screens/Navigation/screen2.dart";
@@ -22,6 +25,7 @@ import "package:my_app/screens/stack_widget.dart";
 import "package:my_app/screens/stateful_widget.dart";
 import "package:my_app/screens/stateless_widget.dart";
 import "package:my_app/screens/wrap_widget.dart";
+import "package:my_app/screens/Navigation/tabbar_navigation.dart";
 
 void main() {
   runApp(MyApp());
@@ -55,7 +59,11 @@ class MyApp extends StatelessWidget {
       // home:SwitchButton()
       // home:StatefulButtons()
       // home:HomeScreen(),
-      home: PushNvaigation1(),
+      // home: PushNvaigation1(),
+      home: DrawerNavigationWidget(),
+      // home: BottomNavigationWidget(),
+      // home: TabbarNavigationWidget(),
+      // home: PassingDataScreen1(),
       routes: {
         'S1': (context) => Screen1(),
         'S2': (context) => Screen2(),
