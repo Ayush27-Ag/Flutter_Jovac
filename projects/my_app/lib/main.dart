@@ -1,91 +1,60 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Smart Cafe",
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: CafeteriaScreen(),
+      title: "User Preferences",
+      theme: ThemeData(
+        primaryColor: const Color(0xFF5B3FD3),
+        scaffoldBackgroundColor: const Color(0xFFF7F7FB),
+      ),
+      home: const UserPreferenceScreen(),
     );
   }
 }
 
-class CafeteriaScreen extends StatefulWidget {
+class UserPreferenceScreen extends StatefulWidget {
+  const UserPreferenceScreen({super.key});
+
   @override
-  State<CafeteriaScreen> createState() => _CafeteriaScreenState();
+  State<UserPreferenceScreen> createState() => _UserPreferenceScreenState();
 }
 
-class _CafeteriaScreenState extends State<CafeteriaScreen> {
-  Map<String, Map<String, dynamic>> food = {
-    "Burger": {
-      "name": "Veg Burger",
-      "price": 120,
-      "image": "assets/images/burger.jpg",
-      "description": "Delicious veg burger with fresh veggies and cheese.",
-    },
-    "Pizza": {
-      "name": "Margherita Pizza",
-      "price": 180,
-      "image": "assets/images/pizza.jpeg",
-      "description": "Classic cheesy pizza topped with fresh basil.",
-    },
-    "Sandwich": {
-      "name": "Club Sandwich",
-      "price": 100,
-      "image": "assets/images/sandwich.jpg",
-      "description": "Triple layer sandwich with veggies and mayo.",
-    },
-    "Cold Coffee": {
-      "name": "Cold Coffee",
-      "price": 90,
-      "image": "assets/images/cold coffee.jpeg",
-      "description": "Chilled coffee topped with whipped cream.",
-    },
-    "French Fries": {
-      "name": "French Fries",
-      "price": 80,
-      "image": "assets/images/frenchfries.jpg",
-      "description": "Crispy golden fries served with ketchup.",
-    },
-  };
-
-  List<String> category = [
-    "Burger",
-    "Pizza",
-    "Sandwich",
-    "Cold Coffee",
-    "French Fries",
-  ];
-
-  String selectedCategory = "Burger";
-  int quantity = 1;
-  bool showSpecial = true;
-  bool success = false;
+class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
+  bool notification = true;
+  int selectedTheme = 1;
+  String theme = "Dark";
+  String gender = "Female";
+  bool terms = true;
+  double fontSize = 20;
+  String interest = "Flutter";
+  bool saved = true;
+  int currentStep = 1;
 
   @override
   Widget build(BuildContext context) {
-    var item = food[selectedCategory]!;
-
     return Scaffold(
-      backgroundColor: const Color(0xffF3F1FB),
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        centerTitle: true,
-        title: const Text("Smart Café", style: TextStyle(color: Colors.white)),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
+        backgroundColor: const Color(0xFF5B3FD3),
+        elevation: 0,
+        leading: const Icon(Icons.arrow_back, color: Colors.white),
+        title: const Text(
+          "User Preferences",
+          style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 15),
+            child: Icon(Icons.more_vert, color: Colors.white),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -93,432 +62,567 @@ class _CafeteriaScreenState extends State<CafeteriaScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Choose Category",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.deepPurple),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: selectedCategory,
-                  isExpanded: true,
-                  items: category.map((value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.asset(
-                              value == "Burger"
-                                  ? "assets/images/burger.jpg"
-                                  : value == "Pizza"
-                                  ? "assets/images/pizza.jpeg"
-                                  : value == "Sandwich"
-                                  ? "assets/images/sandwich.jpg"
-                                  : value == "Cold Coffee"
-                                  ? "assets/images/cold coffee.jpeg"
-                                  : "assets/images/frenchfries.jpg",
-                              width: 28,
-                              height: 28,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(value),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFEDE7FF),
+                  child: Icon(
+                    Icons.notifications_none,
+                    color: Color(0xFF5B3FD3),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text(
+                    "Enable Notifications",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+                Switch(
+                  value: notification,
+                  activeColor: Colors.white,
+                  activeTrackColor: const Color(0xFF5B3FD3),
                   onChanged: (value) {
                     setState(() {
-                      selectedCategory = value!;
-                      quantity = 1;
+                      notification = value;
                     });
                   },
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Selected Item",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade300,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      item["image"],
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item["name"],
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          item["description"],
-                          style: TextStyle(
-                            color: Colors.grey.shade700,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "₹${item["price"]}",
-                          style: const TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuButton(
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: Row(
-                          children: const [
-                            Text("🧀", style: TextStyle(fontSize: 20)),
-                            SizedBox(width: 10),
-                            Text("Add Cheese"),
-                          ],
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 2,
-                        child: Row(
-                          children: const [
-                            Text("🧴", style: TextStyle(fontSize: 20)),
-                            SizedBox(width: 10),
-                            Text("Extra Sauce"),
-                          ],
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 3,
-                        child: Row(
-                          children: const [
-                            Text("🌿", style: TextStyle(fontSize: 20)),
-                            SizedBox(width: 10),
-                            Text("View Nutrition"),
-                          ],
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 4,
-                        child: Row(
-                          children: const [
-                            Icon(Icons.share, color: Colors.indigo),
-                            SizedBox(width: 10),
-                            Text("Share Item"),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Quantity",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                IconButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.deepPurple.shade100,
-                  ),
-                  onPressed: () {
-                    if (quantity > 1) {
-                      setState(() {
-                        quantity--;
-                      });
-                    }
-                  },
-                  icon: const Icon(Icons.remove, color: Colors.deepPurple),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  quantity.toString(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                IconButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.deepPurple.shade100,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      quantity++;
-                    });
-                  },
-                  icon: const Icon(Icons.add, color: Colors.deepPurple),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                icon: const Icon(Icons.shopping_cart),
-                label: const Text("Place Order"),
-                onPressed: () {
-                  setState(() {
-                    success = true;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                icon: const Icon(Icons.bookmark_border),
-                label: const Text("Save for Later"),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.deepPurple,
-                  side: const BorderSide(color: Colors.deepPurple),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Item Saved Successfully")),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  onPressed: () {
-                    setState(() {
-                      selectedCategory = "Burger";
-                      quantity = 1;
-                    });
-                  },
-                  icon: const Icon(Icons.delete_outline, color: Colors.red),
-                  label: const Text(
-                    "Clear Selection",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      showSpecial = true;
-                    });
-                  },
-                  borderRadius: BorderRadius.circular(35),
-                  child: Container(
-                    width: 70,
-                    height: 70,
-                    decoration: const BoxDecoration(
-                      color: Colors.deepPurple,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Today's\nSpecial",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 10),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 52),
+              child: RichText(
+                text: TextSpan(
+                  style: const TextStyle(color: Colors.black),
+                  children: [
+                    const TextSpan(text: "Notifications : "),
+                    TextSpan(
+                      text: notification ? "Enabled" : "Disabled",
+                      style: TextStyle(
+                        color: notification ? Colors.green : Colors.red,
                       ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 600,
-              height: 43,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF42A5F5), Color(0xFF1E88E5)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueAccent.withOpacity(0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: ElevatedButton.icon(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                icon: const Icon(Icons.apple, color: Colors.white, size: 30),
-                label: const Text(
-                  "Order on iPhone Style",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            if (showSpecial)
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade300,
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-                child: Row(
+              ),
+            ),
+
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+
+            Row(
+              children: const [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFFFF1E6),
+                  child: Icon(Icons.palette_outlined, color: Colors.orange),
+                ),
+                SizedBox(width: 12),
+                Text("Choose Theme", style: TextStyle(fontSize: 17)),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+
+            ToggleButtons(
+              borderRadius: BorderRadius.circular(8),
+              isSelected: [selectedTheme == 0, selectedTheme == 1],
+              selectedColor: Colors.white,
+              color: Colors.black,
+              fillColor: const Color(0xFF5B3FD3),
+              onPressed: (index) {
+                setState(() {
+                  selectedTheme = index;
+                  theme = index == 0 ? "Light" : "Dark";
+                });
+              },
+              children: const [
+                SizedBox(
+                  width: 160,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.light_mode),
+                      SizedBox(width: 8),
+                      Text("Light"),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 160,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.dark_mode),
+                      SizedBox(width: 8),
+                      Text("Dark"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(color: Colors.black),
+                children: [
+                  const TextSpan(text: "Selected Mode : "),
+                  TextSpan(
+                    text: theme,
+                    style: const TextStyle(color: Color(0xFF5B3FD3)),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+            Row(
+              children: const [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFFFEEF3),
+                  child: Icon(Icons.person_outline, color: Colors.pink),
+                ),
+                SizedBox(width: 12),
+                Text("Select Gender", style: TextStyle(fontSize: 17)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
                   children: [
-                    Image.asset(
-                      "assets/images/partypopper.png",
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 15),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Today's Special",
-                            style: TextStyle(
-                              color: Colors.deepPurple,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text("Veg Burger"),
-                          SizedBox(height: 4),
-                          Text(
-                            "₹99",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.deepPurple),
-                      onPressed: () {
+                    Radio(
+                      value: "Male",
+                      groupValue: gender,
+                      onChanged: (value) {
                         setState(() {
-                          showSpecial = false;
+                          gender = value!;
                         });
                       },
                     ),
+                    const Text("Male"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "Female",
+                      groupValue: gender,
+                      onChanged: (value) {
+                        setState(() {
+                          gender = value!;
+                        });
+                      },
+                    ),
+                    const Text("Female"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: "Other",
+                      groupValue: gender,
+                      onChanged: (value) {
+                        setState(() {
+                          gender = value!;
+                        });
+                      },
+                    ),
+                    const Text("Other"),
+                  ],
+                ),
+              ],
+            ),
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(color: Colors.black),
+                children: [
+                  const TextSpan(text: "Selected Gender : "),
+                  TextSpan(
+                    text: gender,
+                    style: const TextStyle(color: Color(0xFF5B3FD3)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+            CheckboxListTile(
+              value: terms,
+              activeColor: Colors.green,
+              contentPadding: EdgeInsets.zero,
+              controlAffinity: ListTileControlAffinity.leading,
+              title: RichText(
+                text: const TextSpan(
+                  style: TextStyle(color: Colors.black),
+                  children: [
+                    TextSpan(text: "I accept the "),
+                    TextSpan(
+                      text: "Terms & Conditions",
+                      style: TextStyle(color: Colors.deepPurple),
+                    ),
                   ],
                 ),
               ),
+              onChanged: (value) {
+                setState(() {
+                  terms = value!;
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: RichText(
+                text: TextSpan(
+                  style: const TextStyle(color: Colors.black),
+                  children: [
+                    const TextSpan(text: "Status : "),
+                    TextSpan(
+                      text: terms ? "Accepted" : "Not Accepted",
+                      style: TextStyle(
+                        color: terms ? Colors.green : Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+            Row(
+              children: const [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFE8F0FF),
+                  child: Text(
+                    "A",
+                    style: TextStyle(color: Colors.blue, fontSize: 20),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Text("Font Size", style: TextStyle(fontSize: 17)),
+                SizedBox(width: 5),
+                Text("(Sample Text)", style: TextStyle(color: Colors.black54)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Text("10"),
+                Expanded(
+                  child: Slider(
+                    min: 10,
+                    max: 30,
+                    value: fontSize,
+                    activeColor: const Color(0xFF5B3FD3),
+                    onChanged: (value) {
+                      setState(() {
+                        fontSize = value;
+                      });
+                    },
+                  ),
+                ),
+                const Text("30"),
+                const SizedBox(width: 10),
+                Text("Current Size : ${fontSize.toInt()}"),
+              ],
+            ),
+            Center(
+              child: Text(
+                "Flutter is Awesome!",
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+            Row(
+              children: const [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFEDE7FF),
+                  child: Icon(Icons.favorite_outline, color: Color(0xFF5B3FD3)),
+                ),
+                SizedBox(width: 12),
+                Text("Choose Your Interests", style: TextStyle(fontSize: 17)),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                ChoiceChip(
+                  label: const Text("Flutter"),
+                  selected: interest == "Flutter",
+                  selectedColor: const Color(0xFF5B3FD3),
+                  labelStyle: TextStyle(
+                    color: interest == "Flutter" ? Colors.white : Colors.black,
+                  ),
+                  onSelected: (value) {
+                    setState(() {
+                      interest = "Flutter";
+                    });
+                  },
+                ),
+                ChoiceChip(
+                  label: const Text("AI"),
+                  selected: interest == "AI",
+                  selectedColor: const Color(0xFF5B3FD3),
+                  labelStyle: TextStyle(
+                    color: interest == "AI" ? Colors.white : Colors.black,
+                  ),
+                  onSelected: (value) {
+                    setState(() {
+                      interest = "AI";
+                    });
+                  },
+                ),
+                ChoiceChip(
+                  label: const Text("Web Development"),
+                  selected: interest == "Web Development",
+                  selectedColor: const Color(0xFF5B3FD3),
+                  labelStyle: TextStyle(
+                    color: interest == "Web Development"
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  onSelected: (value) {
+                    setState(() {
+                      interest = "Web Development";
+                    });
+                  },
+                ),
+                ChoiceChip(
+                  label: const Text("Game Development"),
+                  selected: interest == "Game Development",
+                  selectedColor: const Color(0xFF5B3FD3),
+                  labelStyle: TextStyle(
+                    color: interest == "Game Development"
+                        ? Colors.white
+                        : Colors.black,
+                  ),
+                  onSelected: (value) {
+                    setState(() {
+                      interest = "Game Development";
+                    });
+                  },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(color: Colors.black),
+                children: [
+                  const TextSpan(text: "Selected Interest : "),
+                  TextSpan(
+                    text: interest,
+                    style: const TextStyle(color: Color(0xFF5B3FD3)),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text(
+                  "Quick Actions",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 12),
+                ActionChip(
+                  avatar: const Icon(Icons.refresh, color: Colors.red),
+                  label: const Text("Reset"),
+                  onPressed: () {
+                    setState(() {
+                      notification = true;
+                      selectedTheme = 1;
+                      theme = "Dark";
+                      gender = "Female";
+                      terms = true;
+                      fontSize = 20;
+                      interest = "Flutter";
+                      saved = false;
+                    });
+                  },
+                ),
+                ActionChip(
+                  avatar: const Icon(Icons.save, color: Colors.green),
+                  label: const Text("Save"),
+                  onPressed: () {
+                    setState(() {
+                      saved = true;
+                    });
+                  },
+                ),
+              ],
+            ),
+
             const SizedBox(height: 20),
-            if (success)
+
+            if (saved)
               Container(
+                width: double.infinity,
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
-                    const Icon(Icons.check_circle, color: Colors.white),
-                    const SizedBox(width: 10),
-                    const Expanded(
+                    Icon(Icons.check_circle, color: Colors.white),
+                    SizedBox(width: 10),
+                    Expanded(
                       child: Text(
-                        "Order Placed Successfully!",
+                        "Preferences Saved Successfully!",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          success = false;
-                        });
-                      },
-                      child: const Text(
-                        "DISMISS",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
                   ],
                 ),
               ),
+
+            const SizedBox(height: 8),
+            const Divider(height: 18),
+            const SizedBox(height: 8),
+            Row(
+              children: const [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Color(0xFFEDE7FF),
+                  child: Icon(Icons.list_alt, color: Color(0xFF5B3FD3)),
+                ),
+                SizedBox(width: 12),
+                Text("Profile Setup Progress", style: TextStyle(fontSize: 17)),
+              ],
+            ),
+            const SizedBox(height: 15),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: currentStep >= 0
+                      ? const Color(0xFF5B3FD3)
+                      : Colors.grey.shade300,
+                  child: const Text("1", style: TextStyle(color: Colors.white)),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 2,
+                    color: currentStep >= 1
+                        ? const Color(0xFF5B3FD3)
+                        : Colors.grey.shade300,
+                  ),
+                ),
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: currentStep >= 1
+                      ? const Color(0xFF5B3FD3)
+                      : Colors.grey.shade300,
+                  child: const Text("2", style: TextStyle(color: Colors.white)),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 2,
+                    color: currentStep >= 2
+                        ? const Color(0xFF5B3FD3)
+                        : Colors.grey.shade300,
+                  ),
+                ),
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: currentStep >= 2
+                      ? const Color(0xFF5B3FD3)
+                      : Colors.grey.shade300,
+                  child: const Text("3", style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+
+            Divider(color: Colors.grey, thickness: 1),
+
+            const SizedBox(height: 12),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 35,
+                      vertical: 14,
+                    ),
+                    side: const BorderSide(color: Color(0xFF5B3FD3)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text(
+                    "CANCEL",
+                    style: TextStyle(
+                      color: Color(0xFF5B3FD3),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF5B3FD3),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 35,
+                      vertical: 14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      if (currentStep < 2) {
+                        currentStep++;
+                      }
+                    });
+                  },
+                  child: const Text(
+                    "CONTINUE",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+
             const SizedBox(height: 20),
           ],
         ),
