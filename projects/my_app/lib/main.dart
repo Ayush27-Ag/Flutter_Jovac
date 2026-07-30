@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+
+import 'registration_screen.dart';
 
 void main() {
-  runApp(const StudentPortalApp());
+  runApp(const PlacementApp());
 }
 
-class StudentPortalApp extends StatelessWidget {
-  const StudentPortalApp({super.key});
+class PlacementApp extends StatelessWidget {
+  const PlacementApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Student Information Portal",
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: const HomeScreen(),
+
+      title: "Student Placement",
+
+      theme: ThemeData(
+        useMaterial3: false,
+
+        primarySwatch: Colors.deepPurple,
+
+        scaffoldBackgroundColor: const Color(0xffF5F6FA),
+
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+      ),
+
+      home: const RegistrationScreen(),
     );
   }
 }
