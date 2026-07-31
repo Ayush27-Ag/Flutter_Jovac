@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'screens/home_screen.dart';
 
-void main() {
-  runApp(const StudentAssignmentApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
+  await Hive.openBox('students');
+
+  runApp(const MyApp());
 }
 
-class StudentAssignmentApp extends StatelessWidget {
-  const StudentAssignmentApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Student Assignment Portal',
-      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
+      title: 'Hive CRUD Students',
+      theme: ThemeData(primarySwatch: Colors.deepPurple, useMaterial3: false),
       home: const HomeScreen(),
     );
   }

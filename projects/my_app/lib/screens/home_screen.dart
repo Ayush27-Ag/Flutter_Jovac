@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
-import 'submission_screen.dart';
-import 'guideline_screen.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'update_student_screen.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Box studentBox;
+
+  @override
+  void initState() {
+    super.initState();
+
+    studentBox = Hive.box('students');
+
+    if (studentBox.isEmpty) {
+      studentBox.addAll([
+        {"name": "Ayush", "course": "B.Tech", "age": "20"},
+        {"name": "Aman", "course": "BBA", "age": "21"},
+        {"name": "Dhruv", "course": "B.Tech", "age": "19"},
+        {"name": "Neha", "course": "MCA", "age": "22"},
+        {"name": "Rohit", "course": "M.Tech", "age": "23"},
+      ]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,139 +39,122 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: const Text(
-          "Student Assignment Portal",
+          "Hive CRUD Students",
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(Icons.notifications),
-          ),
-        ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Colors.deepPurple,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: "My Submissions",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
-      ),
+      body: ValueListenableBuilder(
+        valueListenable: studentBox.listenable(),
+        builder: (context, Box box, _) {
+          return ListView.builder(
+            padding: const EdgeInsets.all(12),
+            itemCount: box.length,
+            itemBuilder: (context, index) {
+              final student = Map<String, dynamic>.from(box.getAt(index));
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            children: [
-              Image.asset("assets/images/assignment.png", height: 130),
-
-              const SizedBox(height: 15),
-
-              Card(
-                elevation: 5,
+              return Card(
+                elevation: 4,
+                margin: const EdgeInsets.only(bottom: 12),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
-
-                  child: Column(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 15,
+                  ),
+                  child: Row(
                     children: [
-                      buildRow("Assignment", "Flutter UI Widgets"),
-
-                      buildRow("Subject", "Mobile Application Dev."),
-
-                      buildRow("Faculty", "Mr. Pankaj Kapoor"),
-
-                      buildRow("Last Date", "30 July 2026"),
-
-                      buildRow("Total Marks", "100"),
-
-                      const SizedBox(height: 20),
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple,
-                          ),
-                          icon: const Icon(
-                            Icons.upload_file,
-                            color: Colors.white,
-                          ),
-                          label: const Text(
-                            "Submit Assignment",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const SubmissionScreen(),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              student["name"],
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          },
+                            ),
+
+                            const SizedBox(height: 5),
+
+                            Text(
+                              "${student["course"]} | Age : ${student["age"]} | ID : ${index + 1}",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
 
-                      const SizedBox(height: 10),
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.deepPurple),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => UpdateStudentScreen(
+                                index: index,
+                                student: student,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
 
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: OutlinedButton.icon(
-                          icon: const Icon(
-                            Icons.description,
-                            color: Colors.deepPurple,
-                          ),
-                          label: const Text(
-                            "View Assignment Guidelines",
-                            style: TextStyle(color: Colors.deepPurple),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const GuidelineScreen(),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          bool? result = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Delete Student"),
+                                content: const Text(
+                                  "Are you sure you want to delete this student?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
+                                    child: const Text("Cancel"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                    child: const Text(
+                                      "Delete",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          if (result == true) {
+                            studentBox.deleteAt(index);
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Student Deleted Successfully"),
                               ),
                             );
-                          },
-                        ),
+                          }
+                        },
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 95,
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ),
-
-          Expanded(child: Text(value)),
-        ],
+              );
+            },
+          );
+        },
       ),
     );
   }
